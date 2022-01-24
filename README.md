@@ -83,9 +83,9 @@ Este repositório já contém um _template_ de uma aplicação React criado e co
 ## Antes de começar a desenvolver
 
 1. Clone o repositório
-  * `git clone git@github.com:tryber/sd-0x-project-starwars-planets-search.git`
+  * `git clone git@github.com:tryber/sd-016-b-project-starwars-planets-search.git`
   * Entre na pasta do repositório que você acabou de clonar:
-    * `cd sd-0x-project-starwars-planets-search`
+    * `cd sd-016-b-project-starwars-planets-search`
 
 2. Instale as dependências e inicialize o projeto
   * Instale as dependências:
