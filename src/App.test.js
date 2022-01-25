@@ -407,17 +407,4 @@ describe('6 - Ordene as colunas de forma ascendente ou descendente', () => {
     const actual = planets.map(planet => planet.innerHTML);
     expect(actual).toEqual(expected);
   });
-
-  it('Ordene os planetas do mais populoso para o menos populoso', async () => {
-    await act(async () => {
-      render(<App />);
-    });
-    fireEvent.change(await screen.findByTestId(SORT_COLUMN_SELECTOR), { target: { value: 'population' }});
-    fireEvent.click(await screen.findByTestId(SORT_ORDER_DESC_SELECTOR));
-    fireEvent.click(await screen.findByTestId(SORT_APPLY_SELECTOR));
-    const expected = ['Coruscant', 'Naboo', 'Alderaan', 'Kamino', 'Endor', 'Bespin', 'Dagobah', 'Hoth', 'Tatooine', 'Yavin IV'];
-    const planets = await screen.findAllByTestId(PLANET_NAME_SELECTOR);
-    const actual = planets.map(planet => planet.innerHTML);
-    expect(actual).toEqual(expected);
-  });
 });
