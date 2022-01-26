@@ -24,3 +24,5 @@ yarn-error.log*
 
 # VSCode repo settings
 .vscode
+src/utils/moke/index.js
+src/App.test.js

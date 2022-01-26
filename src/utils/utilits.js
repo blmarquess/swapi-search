@@ -1,4 +1,4 @@
-const URL_API = 'https://swapi-trybe.herokuapp.com/api/planets/';
+export const URL_API = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
 export const getDataAPI = async (endpoint = URL_API) => {
   const result = await (fetch(endpoint)
@@ -6,4 +6,21 @@ export const getDataAPI = async (endpoint = URL_API) => {
   return result.results;
 };
 
-export const temp = 'json';
+export const initialState = {
+  apiresults: [],
+  filters: {},
+};
+
+export const TableHeader = ['Name',
+  'Rotation period',
+  'Orbital period',
+  'Diameter',
+  'Climate',
+  'Gravity',
+  'Terrain',
+  'Surface water',
+  'Population',
+  'Films',
+  'Created',
+  'Edited',
+  'Url'];
