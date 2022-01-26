@@ -26,3 +26,5 @@ yarn-error.log*
 .vscode
 src/utils/moke/index.js
 src/App.test.js
+src/App.css
+src/App.test.js
