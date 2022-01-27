@@ -11,8 +11,9 @@ const DataProvider = ({ children }) => {
   const upDateFilterState = (key, newData) => {
     if (key === 'filterByValues') {
       const dbFilter = new Set(filters.filterByValues);
+      console.log(dbFilter.has(newData));
       dbFilter.add(newData);
-      return setFilters({ ...filters, [key]: dbFilter });
+      return setFilters({ ...filters, [key]: [...dbFilter] });
     }
     return setFilters({ ...filters, [key]: newData });
   };
@@ -24,12 +25,6 @@ const DataProvider = ({ children }) => {
     };
     getPlanetsData();
   }, []);
-
-  // const setFilterByValues = (obj) => {
-  //   const dbFilter = new Set(filters.filterByValues);
-  //   dbFilter.add(obj);
-  //   return upDateFilterState('filterByValues', dbFilter);
-  // }
 
   return (
     <DataContext.Provider

@@ -5,6 +5,13 @@ import { dropValues, dropCompare } from '../utils/utilits';
 export default () => {
   const { setFilterName, filterset } = useContext(DataContext);
 
+  const newFilter = {
+    column: filterset.column,
+    comparison: filterset.comparison,
+    value: filterset.value,
+    tag: 'X',
+  };
+
   return (
     <>
       <header>
@@ -62,10 +69,18 @@ export default () => {
         <input
           type="number"
           name="value"
+          data-testid="value-filter"
           value={ filterset.value }
           onChange={ ({ target }) => setFilterName(target.name, target.value) }
         />
-        <button type="button">Filtrar</button>
+        <button
+          type="button"
+          name="filterByValues"
+          data-testid="button-filter"
+          onClick={ ({ target: { name } }) => setFilterName(name, newFilter) }
+        >
+          Filtrar
+        </button>
         <section>
           <label htmlFor="ascend">
             <input type="radio" id="ascend" name="order_filter" value="ascend" />
