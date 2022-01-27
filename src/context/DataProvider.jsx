@@ -19,10 +19,10 @@ const DataProvider = ({ children }) => {
 
   const filterSwitch = (arr, obj) => {
     if (obj.comparison === 'maior que') {
-      return arr.filter((item) => item[obj.column] > obj.value);
+      return arr.filter((item) => Number(item[obj.column]) > Number(obj.value));
     }
     if (obj.comparison === 'menor que') {
-      return arr.filter((item) => item[obj.column] <= obj.value);
+      return arr.filter((item) => (item[obj.column]) <= obj.value);
     }
     if (obj.comparison === 'igual a') {
       return arr.filter((item) => item[obj.column] === obj.value);
