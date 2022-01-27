@@ -6,10 +6,14 @@ export const getDataAPI = async (endpoint = URL_API) => {
   return result.results;
 };
 
-export const initialState = {
-  apiresults: [],
-  filters: {},
-};
+export const initialState = { planetName: '' };
+
+export const filterSet = (arrDB, filterOBJ) => arrDB
+  .filter(({ name }) => {
+    if (!filterOBJ.name) {
+      return true;
+    } return name.includes(filterOBJ.name);
+  });
 
 export const TableHeader = ['Name',
   'Rotation period',

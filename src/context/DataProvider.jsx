@@ -5,14 +5,11 @@ import { initialState, getDataAPI } from '../utils/utilits';
 export const DataContext = React.createContext();
 
 const DataProvider = ({ children }) => {
-  const [state, setState] = useState(initialState);
+  const [filters, setFilters] = useState(initialState);
   const [data, setAPIData] = useState({ apidb: [{ db: 'results' }] });
 
   const updateState = (key, newData) => {
-    setState({
-      ...state,
-      [key]: newData,
-    });
+    setFilters({ ...filters, [key]: newData });
   };
 
   useEffect(() => {
@@ -27,9 +24,9 @@ const DataProvider = ({ children }) => {
   return (
     <DataContext.Provider
       value={ {
-        apiresults: data.apidb,
-        filters: state.filters,
-        setFilter: (filter) => updateState('filters', filter),
+        datatable: data.apidb,
+        filterset: filters,
+        setFilter: (nam, filt) => updateState(nam, filt),
       } }
     >
       { children }

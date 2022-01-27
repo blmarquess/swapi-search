@@ -28,18 +28,18 @@ const mockFetch = () => {
     }));
 }
 
-describe('1 - Faça uma requisição para o endpoint `/planets` da API de Star Wars e preencha uma tabela com os dados retornados, com exceção dos da coluna `residents`', () => {
+describe.only('1 - Faça uma requisição para o endpoint `/planets` da API de Star Wars e preencha uma tabela com os dados retornados, com exceção dos da coluna `residents`', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 
-  it('Realize uma requisição para a API', async () => {
+  it.only('Realize uma requisição para a API', async () => {
     await act(async () => {
       render(<App />);
     });
     expect(global.fetch).toHaveBeenCalled();
   });
 
-  it('Preencha a tabela com os dados retornados', async () => {
+  it.only('Preencha a tabela com os dados retornados', async () => {
     await act(async () => {
       render(<App />);
     });
@@ -67,7 +67,7 @@ describe('1 - Faça uma requisição para o endpoint `/planets` da API de Star W
     };
   });
 
-  it('Verifique se a tabela tem 13 colunas', async () => {
+  it.only('Verifique se a tabela tem 13 colunas', async () => {
     await act(async () => {
       render(<App />);
     });
@@ -75,7 +75,7 @@ describe('1 - Faça uma requisição para o endpoint `/planets` da API de Star W
     expect(await screen.findAllByRole(COLUMN_ROLE_SELECTOR)).toHaveLength(13);
   });
 
-  it('Verifique se a tabela tem uma linha para cada planeta retornado', async () => {
+  it.only('Verifique se a tabela tem uma linha para cada planeta retornado', async () => {
     await act(async () => {
       render(<App />);
     });
@@ -84,7 +84,7 @@ describe('1 - Faça uma requisição para o endpoint `/planets` da API de Star W
   });
 });
 
-describe('2 - Filtre a tabela através de um texto, inserido num *campo de texto*, exibindo somente os planetas cujos nomes incluam o texto digitado', () => {
+describe.only('2 - Filtre a tabela através de um texto, inserido num *campo de texto*, exibindo somente os planetas cujos nomes incluam o texto digitado', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 
