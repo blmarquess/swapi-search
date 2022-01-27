@@ -3,7 +3,11 @@ import { DataContext } from '../context/DataProvider';
 import { TableHeader } from '../utils/utilits';
 
 export default () => {
-  const { apiresults } = useContext(DataContext);
+  const { datatable, filterset } = useContext(DataContext);
+  const data = datatable.filter(({ name }) => {
+    if (filterset.planetName === '') return true;
+    return name.includes(filterset.planetName);
+  });
 
   return (
     <table>
@@ -15,7 +19,7 @@ export default () => {
         </tr>
       </thead>
       <tbody>
-        {apiresults.map((planet) => (
+        {data.map((planet) => (
           <tr key={ Math.random() }>
             <td>{planet.name}</td>
             <td>{planet.rotation_period}</td>
@@ -30,8 +34,7 @@ export default () => {
             <td>{planet.created}</td>
             <td>{planet.edited}</td>
             <td>{planet.url}</td>
-          </tr>
-        ))}
+          </tr>))}
       </tbody>
     </table>
   );
