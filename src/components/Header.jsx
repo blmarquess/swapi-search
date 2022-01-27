@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
 import { DataContext } from '../context/DataProvider';
+import { dropValues, dropCompare } from '../utils/utilits';
 
 export default () => {
-  const { setFilter, filterset } = useContext(DataContext);
+  const { setFilterName, filterset } = useContext(DataContext);
+
   return (
     <>
       <header>
@@ -15,7 +17,7 @@ export default () => {
             type="text"
             placeholder="Filtrar por"
             data-testid="name-filter"
-            onChange={ ({ target }) => setFilter(target.name, target.value) }
+            onChange={ ({ target }) => setFilterName(target.name, target.value) }
             name="planetName"
             value={ filterset.planetName }
           />
@@ -23,19 +25,47 @@ export default () => {
       </header>
 
       <section className="row-filter">
-        <select value="temp_popularity">
-          <option>
-            temp_popularity
-          </option>
-        </select>
-        <select value="temp_igual_ou">
-          <option>
-            temp_igual_ou
-          </option>
-        </select>
-        <input type="number" />
-        <button type="button">Filtrar</button>
+        <select
+          value={ filterset.column }
+          data-testid="column-filter"
+          name="column"
+          onChange={ ({ target }) => setFilterName(target.name, target.value) }
+        >
+          {dropValues.map((optCol) => (
+            <option
+              value={ optCol }
+              key={ Math.random() }
+            >
+              { optCol }
+            </option>
+          ))}
 
+        </select>
+
+        <select
+          value={ filterset.comparison }
+          data-testid="comparison-filter"
+          name="comparison"
+          onChange={ ({ target }) => setFilterName(target.name, target.value) }
+        >
+          {dropCompare.map((optCompare) => (
+            <option
+              value={ optCompare }
+              key={ Math.random() }
+            >
+              { optCompare }
+            </option>
+          ))}
+
+        </select>
+
+        <input
+          type="number"
+          name="value"
+          value={ filterset.value }
+          onChange={ ({ target }) => setFilterName(target.name, target.value) }
+        />
+        <button type="button">Filtrar</button>
         <section>
           <label htmlFor="ascend">
             <input type="radio" id="ascend" name="order_filter" value="ascend" />
