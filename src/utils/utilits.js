@@ -6,7 +6,15 @@ export const getDataAPI = async (endpoint = URL_API) => {
   return result.results;
 };
 
-export const initialState = { planetName: '' };
+export const initialState = {
+  planetName: '',
+  column: 'population',
+  comparison: 'maior que',
+  value: 0,
+  filterByValues: [],
+};
+
+export const makeUUID = () => Math.random().toString(+'18').split('0.')[1];
 
 export const filterSet = (arrDB, filterOBJ) => arrDB
   .filter(({ name }) => {
@@ -28,3 +36,12 @@ export const TableHeader = ['Name',
   'Created',
   'Edited',
   'Url'];
+
+export const dropValues = [
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water'];
+
+export const dropCompare = ['maior que', 'menor que', 'igual a'];
