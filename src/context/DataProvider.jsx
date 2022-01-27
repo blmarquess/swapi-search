@@ -8,25 +8,35 @@ const DataProvider = ({ children }) => {
   const [filters, setFilters] = useState(initialState);
   const [data, setAPIData] = useState({ apidb: [{ db: 'results' }] });
 
-  const updateState = (key, newData) => {
-    setFilters({ ...filters, [key]: newData });
+  const upDateFilterState = (key, newData) => {
+    if (key === 'filterByValues') {
+      const dbFilter = new Set(filters.filterByValues);
+      dbFilter.add(newData);
+      return setFilters({ ...filters, [key]: dbFilter });
+    }
+    return setFilters({ ...filters, [key]: newData });
   };
 
   useEffect(() => {
     const getPlanetsData = async () => {
       const results = await getDataAPI();
       setAPIData({ apidb: results });
-      // console.log('Fez fetch na API!');
     };
     getPlanetsData();
   }, []);
+
+  // const setFilterByValues = (obj) => {
+  //   const dbFilter = new Set(filters.filterByValues);
+  //   dbFilter.add(obj);
+  //   return upDateFilterState('filterByValues', dbFilter);
+  // }
 
   return (
     <DataContext.Provider
       value={ {
         datatable: data.apidb,
         filterset: filters,
-        setFilter: (nam, filt) => updateState(nam, filt),
+        setFilterName: (nam, filt) => upDateFilterState(nam, filt),
       } }
     >
       { children }
