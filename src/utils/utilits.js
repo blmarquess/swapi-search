@@ -45,3 +45,30 @@ export const dropValues = [
   'surface_water'];
 
 export const dropCompare = ['maior que', 'menor que', 'igual a'];
+
+export const filterSwitch = (arr, obj) => {
+  if (obj.comparison === 'maior que') {
+    return arr.filter((item) => item[obj.column] >= obj.value);
+  }
+  if (obj.comparison === 'menor que') {
+    return arr.filter((item) => item[obj.column] <= obj.value);
+  }
+  if (obj.comparison === 'igual a') {
+    return arr.filter((item) => item[obj.column] === obj.value);
+  }
+};
+
+export const recursive = (ar, obj) => {
+  if (obj) {
+    return obj.reduce((acc, crv) => filterSwitch(acc, crv), [...ar]);
+  } return ar;
+};
+
+export const recursiveXGH = (ar, obj) => {
+  if (obj.length === 0) {
+    return ar;
+  }
+  const fil = obj.shift();
+  const newArr = filterSwitch(ar, fil);
+  return recursive(newArr, obj);
+};

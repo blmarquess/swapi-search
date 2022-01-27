@@ -11,12 +11,26 @@ const DataProvider = ({ children }) => {
   const upDateFilterState = (key, newData) => {
     if (key === 'filterByValues') {
       const dbFilter = new Set(filters.filterByValues);
-      console.log(dbFilter.has(newData));
       dbFilter.add(newData);
       return setFilters({ ...filters, [key]: [...dbFilter] });
     }
     return setFilters({ ...filters, [key]: newData });
   };
+
+  const filterSwitch = (arr, obj) => {
+    if (obj.comparison === 'maior que') {
+      return arr.filter((item) => item[obj.column] > obj.value);
+    }
+    if (obj.comparison === 'menor que') {
+      return arr.filter((item) => item[obj.column] <= obj.value);
+    }
+    if (obj.comparison === 'igual a') {
+      return arr.filter((item) => item[obj.column] === obj.value);
+    }
+  };
+
+  const recursive = (arrData, arrObj) => arrObj
+    .reduce((acc, crv) => filterSwitch(acc, crv), [...arrData]);
 
   useEffect(() => {
     const getPlanetsData = async () => {
@@ -29,8 +43,8 @@ const DataProvider = ({ children }) => {
   return (
     <DataContext.Provider
       value={ {
-        datatable: data.apidb,
         filterset: filters,
+        dataFilterd: recursive(data.apidb, filters.filterByValues),
         setFilterName: (nam, filt) => upDateFilterState(nam, filt),
       } }
     >

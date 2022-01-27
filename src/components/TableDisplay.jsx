@@ -3,9 +3,9 @@ import { DataContext } from '../context/DataProvider';
 import { TableHeader } from '../utils/utilits';
 
 export default () => {
-  const { datatable, filterset } = useContext(DataContext);
+  const { filterset, dataFilterd } = useContext(DataContext);
 
-  const data = datatable.filter(({ name }) => {
+  const data = dataFilterd.filter(({ name }) => {
     if (filterset.planetName === '') return true;
     return name.includes(filterset.planetName);
   });
