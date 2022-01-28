@@ -46,7 +46,23 @@ header {
 }
 
 .tag-filter {
-  background: rgba(126, 125, 125, 0.356);
-  border-radius: 50%;
-  font-size: 10px;
+  align-items: center;
+  background: rgba(231, 84, 84, 0.829);
+  border-radius: 10px;
+  display: flex;
+  font-size: 15px;
+  justify-content: space-around;
+  max-height: 20px;
+  max-width: 200px;
+  padding: 5px 10px;
+}
+
+.tag-filter button {
+  align-items: center;
+  background: rgb(49, 5, 5);
+  border-radius: 8px;
+  color: white;
+  display: flex;
+  font-weight: 800;
+  padding: 3px;
 }

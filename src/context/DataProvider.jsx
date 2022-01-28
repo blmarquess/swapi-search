@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { initialState, getDataAPI, recursive } from '../utils/utilits';
+import { initialState, getDataAPI, recursiveXGH, dropColOption } from '../utils/utilits';
 
 export const DataContext = React.createContext();
 
@@ -23,6 +23,9 @@ const DataProvider = ({ children }) => {
     return upDateFilterState('filterByValues', newFilterByValues);
   };
 
+  const notFiltreds = filters.filterByValues.map((it) => it.column);
+  const optionFilterDropDown = dropColOption(notFiltreds);
+
   useEffect(() => {
     const getPlanetsData = async () => {
       const results = await getDataAPI();
@@ -36,7 +39,8 @@ const DataProvider = ({ children }) => {
       value={ {
         filterset: filters,
         filtertags: filters.filterByValues,
-        dataFilterd: recursive(data.apidb, filters.filterByValues),
+        dropoptions: optionFilterDropDown,
+        dataFilterd: recursiveXGH(data.apidb, filters.filterByValues),
         setFilterName: (nam, filt) => upDateFilterState(nam, filt),
         deletFilter: (id) => removeFilterByID(id),
       } }

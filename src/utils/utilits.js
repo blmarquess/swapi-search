@@ -44,6 +44,14 @@ export const dropValues = [
   'rotation_period',
   'surface_water'];
 
+export const filterInUse = (val, tagListFiltes) => {
+  const tem = new Set(tagListFiltes);
+  return tem.has(val);
+};
+
+export const dropColOption = (tagList) => dropValues
+  .filter((option) => !filterInUse(option, tagList));
+
 export const dropCompare = ['maior que', 'menor que', 'igual a'];
 
 export const filterSwitch = (arr, obj) => {
@@ -68,11 +76,5 @@ export const recursiveXGH = (ar, obj) => {
 };
 
 // dava pra fazer com esse reduce abaixo mais o XGH foi nice!
-export const recursive = (ar, obj) => {
-  if (obj) {
-    return obj.reduce((acc, crv) => filterSwitch(acc, crv), [...ar]);
-  } return ar;
-};
-
-export const recursive02 = (arrData, arrObj) => arrObj
+export const recursive = (arrData, arrObj) => arrObj
   .reduce((acc, crv) => filterSwitch(acc, crv), [...arrData]);
