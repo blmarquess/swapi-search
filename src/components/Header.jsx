@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { DataContext } from '../context/DataProvider';
-import { dropValues, dropCompare, makeUUID } from '../utils/utilits';
+import { dropCompare, makeUUID } from '../utils/utilits';
 
 export default () => {
-  const { setFilterName, filterset } = useContext(DataContext);
+  const { setFilterName, filterset, dropoptions } = useContext(DataContext);
 
   const newFilter = {
     column: filterset.column,
@@ -39,7 +39,7 @@ export default () => {
           name="column"
           onChange={ ({ target }) => setFilterName(target.name, target.value) }
         >
-          {dropValues.map((optCol) => (
+          {dropoptions.map((optCol) => (
             <option
               value={ optCol }
               key={ Math.random() }
