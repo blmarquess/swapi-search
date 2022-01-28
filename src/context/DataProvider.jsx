@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { initialState, getDataAPI } from '../utils/utilits';
+import { initialState, getDataAPI, recursive } from '../utils/utilits';
 
 export const DataContext = React.createContext();
 
@@ -17,20 +17,11 @@ const DataProvider = ({ children }) => {
     return setFilters({ ...filters, [key]: newData });
   };
 
-  const filterSwitch = (arr, obj) => {
-    if (obj.comparison === 'maior que') {
-      return arr.filter((item) => Number(item[obj.column]) > Number(obj.value));
-    }
-    if (obj.comparison === 'menor que') {
-      return arr.filter((item) => (item[obj.column]) <= obj.value);
-    }
-    if (obj.comparison === 'igual a') {
-      return arr.filter((item) => item[obj.column] === obj.value);
-    }
+  const removeFilterByID = (deletID) => {
+    const { filterByValues } = filters;
+    const newFilterByValues = filterByValues.filter(({ id }) => id !== deletID);
+    return upDateFilterState('filterByValues', newFilterByValues);
   };
-
-  const recursive = (arrData, arrObj) => arrObj
-    .reduce((acc, crv) => filterSwitch(acc, crv), [...arrData]);
 
   useEffect(() => {
     const getPlanetsData = async () => {
@@ -46,6 +37,7 @@ const DataProvider = ({ children }) => {
         filterset: filters,
         dataFilterd: recursive(data.apidb, filters.filterByValues),
         setFilterName: (nam, filt) => upDateFilterState(nam, filt),
+        deletFilter: (id) => removeFilterByID(id),
       } }
     >
       { children }
