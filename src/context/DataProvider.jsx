@@ -35,6 +35,7 @@ const DataProvider = ({ children }) => {
     <DataContext.Provider
       value={ {
         filterset: filters,
+        filtertags: filters.filterByValues,
         dataFilterd: recursive(data.apidb, filters.filterByValues),
         setFilterName: (nam, filt) => upDateFilterState(nam, filt),
         deletFilter: (id) => removeFilterByID(id),
