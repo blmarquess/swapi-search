@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { DataContext } from '../context/DataProvider';
-import { dropValues, dropCompare } from '../utils/utilits';
+import { dropValues, dropCompare, makeUUID } from '../utils/utilits';
 
 export default () => {
   const { setFilterName, filterset } = useContext(DataContext);
@@ -10,6 +10,7 @@ export default () => {
     comparison: filterset.comparison,
     value: filterset.value,
     tag: 'X',
+    id: makeUUID(),
   };
 
   return (

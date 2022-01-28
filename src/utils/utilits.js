@@ -48,20 +48,14 @@ export const dropCompare = ['maior que', 'menor que', 'igual a'];
 
 export const filterSwitch = (arr, obj) => {
   if (obj.comparison === 'maior que') {
-    return arr.filter((item) => item[obj.column] >= obj.value);
+    return arr.filter((item) => Number(item[obj.column]) > Number(obj.value));
   }
   if (obj.comparison === 'menor que') {
-    return arr.filter((item) => item[obj.column] <= obj.value);
+    return arr.filter((item) => (item[obj.column]) <= obj.value);
   }
   if (obj.comparison === 'igual a') {
     return arr.filter((item) => item[obj.column] === obj.value);
   }
-};
-
-export const recursive = (ar, obj) => {
-  if (obj) {
-    return obj.reduce((acc, crv) => filterSwitch(acc, crv), [...ar]);
-  } return ar;
 };
 
 export const recursiveXGH = (ar, obj) => {
@@ -70,5 +64,15 @@ export const recursiveXGH = (ar, obj) => {
   }
   const fil = obj.shift();
   const newArr = filterSwitch(ar, fil);
-  return recursive(newArr, obj);
+  return recursiveXGH(newArr, obj);
 };
+
+// dava pra fazer com esse reduce abaixo mais o XGH foi nice!
+export const recursive = (ar, obj) => {
+  if (obj) {
+    return obj.reduce((acc, crv) => filterSwitch(acc, crv), [...ar]);
+  } return ar;
+};
+
+export const recursive02 = (arrData, arrObj) => arrObj
+  .reduce((acc, crv) => filterSwitch(acc, crv), [...arrData]);
