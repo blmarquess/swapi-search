@@ -1,50 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
-import { initialState, getDataAPI, recursiveXGH, dropColOption } from '../utils/utilits';
+import reducer from './reducer';
+import { initialState, getDataAPI } from '../utils/utilits';
 
 export const DataContext = React.createContext();
 
 const DataProvider = ({ children }) => {
-  const [filters, setFilters] = useState(initialState);
-  const [data, setAPIData] = useState({ apidb: [{ db: 'results' }] });
-
-  const upDateFilterState = (key, newData) => {
-    if (key === 'filterByValues') {
-      const dbFilter = new Set(filters.filterByValues);
-      dbFilter.add(newData);
-      return setFilters({ ...filters, [key]: [...dbFilter] });
-    }
-    return setFilters({ ...filters, [key]: newData });
-  };
-
-  const removeFilterByID = (deletID) => {
-    const { filterByValues } = filters;
-    const newFilterByValues = filterByValues.filter(({ id }) => id !== deletID);
-    return upDateFilterState('filterByValues', newFilterByValues);
-  };
-
-  const notFiltreds = filters.filterByValues.map((it) => it.column);
-  const optionFilterDropDown = dropColOption(notFiltreds);
+  const [store, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
+    console.log('noFetcg');
     const getPlanetsData = async () => {
       const results = await getDataAPI();
-      setAPIData({ apidb: results });
+      dispatch({ type: 'DATA_API', payload: results });
     };
     getPlanetsData();
   }, []);
 
   return (
-    <DataContext.Provider
-      value={ {
-        filterset: filters,
-        filtertags: filters.filterByValues,
-        dropoptions: optionFilterDropDown,
-        dataFilterd: recursiveXGH(data.apidb, filters.filterByValues),
-        setFilterName: (nam, filt) => upDateFilterState(nam, filt),
-        deletFilter: (id) => removeFilterByID(id),
-      } }
-    >
+    <DataContext.Provider value={ { store, dispatch } }>
       { children }
     </DataContext.Provider>
   );
