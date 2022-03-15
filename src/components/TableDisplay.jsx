@@ -1,14 +1,10 @@
 import React, { useContext } from 'react';
 import { DataContext } from '../context/DataProvider';
-import { TableHeader } from '../utils/utilits';
+// import useDataFilter from '../utils/useDataFilter';
+import { TableHeader, recursiveXGH } from '../utils/utilits';
 
 export default () => {
-  const { filterset, dataFilterd } = useContext(DataContext);
-
-  const data = dataFilterd.filter(({ name }) => {
-    if (filterset.planetName === '') return true;
-    return name.includes(filterset.planetName);
-  });
+  const { store } = useContext(DataContext);
 
   return (
     <table>
@@ -20,7 +16,7 @@ export default () => {
         </tr>
       </thead>
       <tbody>
-        {data.map((planet) => (
+        {store.data && recursiveXGH(store.data, store.filterByValues).map((planet) => (
           <tr key={ Math.random() }>
             <td>{planet.name}</td>
             <td>{planet.rotation_period}</td>
