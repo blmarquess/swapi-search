@@ -4,7 +4,14 @@ import { DataContext } from '../context/DataProvider';
 import { TableHeader, recursiveXGH } from '../utils/utilits';
 
 export default () => {
-  const { store } = useContext(DataContext);
+  const { store: { data, filterByName, filterByValues } } = useContext(DataContext);
+
+  const dataToDisplay = data.filter(({ name }) => {
+    if (data.filterByName === '') { return true; }
+    return name.toLowerCase().includes(filterByName.toLowerCase());
+  });
+
+  console.log(dataToDisplay);
 
   return (
     <table>
@@ -16,7 +23,7 @@ export default () => {
         </tr>
       </thead>
       <tbody>
-        {store.data && recursiveXGH(store.data, store.filterByValues).map((planet) => (
+        {data && recursiveXGH(dataToDisplay, filterByValues).map((planet) => (
           <tr key={ Math.random() }>
             <td>{planet.name}</td>
             <td>{planet.rotation_period}</td>
