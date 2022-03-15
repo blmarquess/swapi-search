@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { DataContext } from '../context/DataProvider';
 
 export default function FilterTag() {
-  const { deletFilter, filtertags } = useContext(DataContext);
+  const { store: { filterByValues }, dispatch } = useContext(DataContext);
 
   return (
-    filtertags.map((filter) => (
+    filterByValues
+    && filterByValues.map((filter) => (
       <div key={ Math.random() } className="tag-filter">
         <span>
           { filter.column }
@@ -17,7 +18,13 @@ export default function FilterTag() {
         <span>
           { filter.value }
         </span>
-        <button type="button" onClick={ () => deletFilter(filter.id) }>
+        <button
+          type="button"
+          onClick={ () => dispatch({
+            type: 'REMOVE_FILTER',
+            payload: filter.id,
+          }) }
+        >
           X
         </button>
       </div>
