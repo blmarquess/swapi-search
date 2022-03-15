@@ -1,17 +1,30 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { DataContext } from '../context/DataProvider';
-import { dropCompare, makeUUID } from '../utils/utilits';
+import { dropCompare, makeUUID, dropValues } from '../utils/utilits';
+
+const initState = {
+  column: 'population',
+  comparison: 'maior que',
+  value: '',
+  search: '',
+};
 
 export default () => {
-  const { setFilterName, filterset, dropoptions } = useContext(DataContext);
+  const [filterState, setFilt] = useState(initState);
+  const { dispatch } = useContext(DataContext);
 
-  const newFilter = {
-    column: filterset.column,
-    comparison: filterset.comparison,
-    value: filterset.value,
-    tag: 'X',
-    id: makeUUID(),
+  const setFilterState = (key, val) => setFilt({ ...filterState, [key]: val });
+
+  const newFilter = { ...filterState, tag: 'X', id: makeUUID() };
+
+  const sendFilter = () => {
+    dispatch({ type: 'ADD_FILTER_VALUE', payload: newFilter });
+    setFilt(initState);
   };
+
+  useEffect(() => {
+    dispatch({ type: 'SEARCH_BOX', payload: filterState.search });
+  }, [filterState.search, dispatch]);
 
   return (
     <>
@@ -25,21 +38,21 @@ export default () => {
             type="text"
             placeholder="Filtrar por"
             data-testid="name-filter"
-            onChange={ ({ target }) => setFilterName(target.name, target.value) }
-            name="planetName"
-            value={ filterset.planetName }
+            onChange={ ({ target: { name, value } }) => setFilterState(name, value) }
+            name="search"
+            value={ filterState.search }
           />
         </section>
       </header>
 
       <section className="row-filter">
         <select
-          value={ filterset.column }
+          value={ filterState.column }
           data-testid="column-filter"
           name="column"
-          onChange={ ({ target }) => setFilterName(target.name, target.value) }
+          onChange={ ({ target: { name, value } }) => setFilterState(name, value) }
         >
-          {dropoptions.map((optCol) => (
+          {dropValues.map((optCol) => (
             <option
               value={ optCol }
               key={ Math.random() }
@@ -51,10 +64,10 @@ export default () => {
         </select>
 
         <select
-          value={ filterset.comparison }
+          value={ filterState.comparison }
           data-testid="comparison-filter"
           name="comparison"
-          onChange={ ({ target }) => setFilterName(target.name, target.value) }
+          onChange={ ({ target: { name, value } }) => setFilterState(name, value) }
         >
           {dropCompare.map((optCompare) => (
             <option
@@ -71,14 +84,14 @@ export default () => {
           type="number"
           name="value"
           data-testid="value-filter"
-          value={ filterset.value }
-          onChange={ ({ target }) => setFilterName(target.name, target.value) }
+          value={ filterState.value }
+          onChange={ ({ target: { name, value } }) => setFilterState(name, value) }
         />
         <button
           type="button"
           name="filterByValues"
           data-testid="button-filter"
-          onClick={ ({ target: { name } }) => setFilterName(name, newFilter) }
+          onClick={ sendFilter }
         >
           Filtrar
         </button>
