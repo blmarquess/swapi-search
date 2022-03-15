@@ -5,7 +5,7 @@ import { dropCompare, makeUUID, dropValues } from '../utils/utilits';
 const initState = {
   column: 'population',
   comparison: 'maior que',
-  value: '',
+  value: 0,
   search: '',
 };
 
