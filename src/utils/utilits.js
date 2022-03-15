@@ -10,6 +10,9 @@ export const initialState = {
   data: [],
   filterByName: '',
   filterByValues: [],
+  orderBy:
+    { column: 'population',
+      sort: 'ASC' },
 };
 
 export const makeUUID = () => Math.random().toString(+'18').split('0.')[1];
@@ -58,7 +61,7 @@ export const filterSwitch = (arr, obj) => {
     return arr.filter((item) => Number(item[obj.column]) > Number(obj.value));
   }
   if (obj.comparison === 'menor que') {
-    return arr.filter((item) => (item[obj.column]) <= obj.value);
+    return arr.filter((item) => Number(item[obj.column]) < Number(obj.value));
   }
   if (obj.comparison === 'igual a') {
     return arr.filter((item) => item[obj.column] === obj.value);
