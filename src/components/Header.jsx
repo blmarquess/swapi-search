@@ -11,7 +11,9 @@ const initState = {
 
 export default () => {
   const [filterState, setFilt] = useState(initState);
-  const { dispatch } = useContext(DataContext);
+  const { dispatch, store: { filterByValues } } = useContext(DataContext);
+  const inFilter = filterByValues?.map(({ column }) => column);
+  const postFilter = dropValues.filter((item) => !inFilter.includes(item));
 
   const setFilterState = (key, val) => setFilt({ ...filterState, [key]: val });
 
@@ -52,14 +54,15 @@ export default () => {
           name="column"
           onChange={ ({ target: { name, value } }) => setFilterState(name, value) }
         >
-          {dropValues.map((optCol) => (
-            <option
-              value={ optCol }
-              key={ Math.random() }
-            >
-              { optCol }
-            </option>
-          ))}
+          {postFilter
+            .map((optCol) => (
+              <option
+                value={ optCol }
+                key={ Math.random() }
+              >
+                { optCol }
+              </option>
+            ))}
 
         </select>
 

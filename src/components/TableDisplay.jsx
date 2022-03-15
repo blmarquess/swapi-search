@@ -11,8 +11,6 @@ export default () => {
     return name.toLowerCase().includes(filterByName.toLowerCase());
   });
 
-  console.log(dataToDisplay);
-
   return (
     <table>
       <thead>
