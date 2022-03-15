@@ -7,10 +7,8 @@ export const getDataAPI = async (endpoint = URL_API) => {
 };
 
 export const initialState = {
-  planetName: '',
-  column: 'population',
-  comparison: 'maior que',
-  value: 0,
+  data: [],
+  filterByName: '',
   filterByValues: [],
 };
 
@@ -20,7 +18,8 @@ export const filterSet = (arrDB, filterOBJ) => arrDB
   .filter(({ name }) => {
     if (!filterOBJ.name) {
       return true;
-    } return name.includes(filterOBJ.name);
+    }
+    return name.includes(filterOBJ.name);
   });
 
 export const TableHeader = ['Name',
@@ -66,8 +65,10 @@ export const filterSwitch = (arr, obj) => {
   }
 };
 
-export const recursiveXGH = (ar, obj) => {
-  if (obj.length === 0) {
+export const recursiveXGH = (arr, arrObj) => {
+  const ar = [...arr];
+  const obj = [...arrObj];
+  if (!obj || obj.length === 0) {
     return ar;
   }
   const fil = obj.shift();
