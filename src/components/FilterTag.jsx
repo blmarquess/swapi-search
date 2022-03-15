@@ -8,7 +8,7 @@ export default function FilterTag() {
   return (
     filterByValues
     && filterByValues.map((filter) => (
-      <div key={ Math.random() } className="tag-filter">
+      <div key={ Math.random() } className="tag-filter" data-testid="filter">
         <span>
           { filter.column }
         </span>
