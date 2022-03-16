@@ -9,13 +9,17 @@ const initState = {
   search: '',
 };
 
+const initSort = { column: 'name', sort: 'ASC' };
+
 export default () => {
   const [filterState, setFilt] = useState(initState);
-  const { dispatch, store: { filterByValues } } = useContext(DataContext);
+  const [order, setOrder] = useState(initSort);
+  const { dispatch, store: { data, filterByValues } } = useContext(DataContext);
   const inFilter = filterByValues?.map(({ column }) => column);
   const postFilter = dropValues.filter((item) => !inFilter.includes(item));
 
   const setFilterState = (key, val) => setFilt({ ...filterState, [key]: val });
+  const setOrderBy = (key, val) => setOrder({ ...order, [key]: val });
 
   const newFilter = { ...filterState, tag: 'X', id: makeUUID() };
 
@@ -27,6 +31,24 @@ export default () => {
   useEffect(() => {
     dispatch({ type: 'SEARCH_BOX', payload: filterState.search });
   }, [filterState.search, dispatch]);
+
+  const ordenar = () => {
+    const { column, sort } = order;
+    if (sort === 'ASC') {
+      const date = [...data.sort((a, b) => a[column] - b[column])];
+      return dispatch({
+        type: 'DATA_API',
+        payload: date,
+      });
+    }
+    if (sort === 'DESC') {
+      const date = [...data.sort((a, b) => b[column] - a[column])];
+      return dispatch({
+        type: 'DATA_API',
+        payload: date,
+      });
+    }
+  };
 
   return (
     <>
@@ -99,15 +121,52 @@ export default () => {
           Filtrar
         </button>
         <section>
+          <select
+            value={ order.column }
+            data-testid="column-sort"
+            name="column"
+            onChange={ ({ target: { name, value } }) => setOrderBy(name, value) }
+          >
+            {dropValues.map((optCompare) => (
+              <option
+                value={ optCompare }
+                key={ Math.random() }
+              >
+                { optCompare }
+              </option>
+            ))}
+
+          </select>
           <label htmlFor="ascend">
-            <input type="radio" id="ascend" name="order_filter" value="ascend" />
+            <input
+              type="radio"
+              data-testid="column-sort-input-asc"
+              id="ASC"
+              name="sort"
+              value="ASC"
+              onChange={ ({ target: { name, value } }) => setOrderBy(name, value) }
+            />
             Ascendente
           </label>
           <label htmlFor="desend">
-            <input type="radio" id="desend" name="order_filter" value="desend" />
+            <input
+              type="radio"
+              data-testid="column-sort-input-desc"
+              id="DESC"
+              name="sort"
+              value="DESC"
+              onChange={ ({ target: { name, value } }) => setOrderBy(name, value) }
+            />
             Descendente
           </label>
-          <button type="button">Ordenar</button>
+          <button
+            type="button"
+            data-testid="column-sort-button"
+            onClick={ ordenar }
+          >
+            Ordenar
+
+          </button>
         </section>
       </section>
     </>
