@@ -10,9 +10,6 @@ export const initialState = {
   data: [],
   filterByName: '',
   filterByValues: [],
-  orderBy:
-    { column: 'population',
-      sort: 'ASC' },
 };
 
 export const makeUUID = () => Math.random().toString(+'18').split('0.')[1];
@@ -45,14 +42,6 @@ export const dropValues = [
   'diameter',
   'rotation_period',
   'surface_water'];
-
-export const filterInUse = (val, tagListFiltes) => {
-  const tem = new Set(tagListFiltes);
-  return tem.has(val);
-};
-
-export const dropColOption = (tagList) => dropValues
-  .filter((option) => !filterInUse(option, tagList));
 
 export const dropCompare = ['maior que', 'menor que', 'igual a'];
 

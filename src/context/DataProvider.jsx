@@ -9,12 +9,10 @@ const DataProvider = ({ children }) => {
   const [store, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    // console.log('Feting');
     const getPlanetsData = async () => {
-      const results = await getDataAPI(); console.log(results);
-      const col = 'name';
-      const restApiOrdedOne = [...results.sort((a, b) => a[col] - b[col])];
-      console.log(restApiOrdedOne);
+      const results = await getDataAPI();
+      const restApiOrdedOne = results
+        .sort((a, b) => a.name.localeCompare(b.name));
       dispatch({
         type: 'DATA_API',
         payload: restApiOrdedOne,
