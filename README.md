@@ -9,4 +9,4 @@
   - 5 - Apague o filtro de valores numéricos e desfaça as filtragens dos dados da tabela ao clicar no ícone de X de um dos filtros
 
     Requisitos bônus:
-    - [6 - Ordene as colunas de forma ascendente ou descendente
+    - 6 - Ordene as colunas de forma ascendente ou descendente
