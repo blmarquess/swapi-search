@@ -10,3 +10,9 @@
 
     Requisitos bônus:
     - 6 - Ordene as colunas de forma ascendente ou descendente
+
+<div align='center'>
+		
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/N4N2DC6XA)
+		
+</div>
